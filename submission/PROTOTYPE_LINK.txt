@@ -1,0 +1,9 @@
+PRAMANSETU (CIVICAUDIT AI) — PROTOTYPE ACCESS
+
+Local Prototype URL: http://localhost:3000
+Citizen Portal: http://localhost:3000/citizen
+Benchmark Demo: http://localhost:3000/demo
+Macro Analytics: http://localhost:3000/analytics
+Backend API: http://127.0.0.1:8002
+
+Hosted Prototype URL: [HOSTED_URL_OR_LOCAL_DEMO]

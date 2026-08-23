@@ -1,0 +1,43 @@
+{
+  "contractors": [
+    {
+      "contractor_id": "CONT-UP-001",
+      "contractor_name": "M/s Apex Civil Constructions Ltd.",
+      "registration_no": "UP-PWD-A-99210",
+      "total_tenders_awarded": 18,
+      "audits_completed": 14,
+      "flags_recorded": 4,
+      "integrity_score": 38,
+      "risk_tier": "HIGH_RISK",
+      "star_rating": 2.0,
+      "flag_history": [
+        {
+          "date": "2023-04-14",
+          "scheme": "Jal Jeevan Mission",
+          "violation": "Asset recycling on pipeline milestone voucher (ASSET-UP-2023-001)",
+          "risk_score": 92
+        },
+        {
+          "date": "2023-11-02",
+          "scheme": "PMGSY",
+          "violation": "Ghost labor muster roll inflation (+18 phantom worker IDs)",
+          "risk_score": 85
+        }
+      ],
+      "cvo_recommendation": "Under active CVO vigilance inquiry — Mandatory physical pre-disbursement forensic audit required."
+    },
+    {
+      "contractor_id": "CONT-UP-002",
+      "contractor_name": "Varanasi Highway Developers Ltd.",
+      "registration_no": "UP-PWD-A-88124",
+      "total_tenders_awarded": 24,
+      "audits_completed": 24,
+      "flags_recorded": 0,
+      "integrity_score": 94,
+      "risk_tier": "LOW_RISK",
+      "star_rating": 5.0,
+      "flag_history": [],
+      "cvo_recommendation": "Tier-1 High Integrity Contractor — Eligible for automated fast-track treasury milestone clearance."
+    }
+  ]
+}

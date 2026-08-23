@@ -1,0 +1,28 @@
+{
+  "past_assets": [
+    {
+      "asset_id": "ASSET-UP-2023-001",
+      "scheme": "Jal Jeevan Mission 2023",
+      "project_name": "Rural Drinking Water Pipeline - Package 12",
+      "phash_value": "c46e6ec4c4c4c56f",
+      "contractor_name": "M/s Apex Civil Constructions Ltd.",
+      "disbursement_amount": "₹42,50,000",
+      "latitude": 25.4358,
+      "longitude": 81.8463,
+      "status": "Paid",
+      "disbursement_date": "2023-04-14"
+    },
+    {
+      "asset_id": "ASSET-UP-2022-002",
+      "scheme": "Pradhan Mantri Gram Sadak Yojana (PMGSY)",
+      "project_name": "Rural Bituminous Connectivity Road - Sector 4",
+      "phash_value": "d4c892b1a37e8912",
+      "contractor_name": "Varanasi Highway Developers Ltd.",
+      "disbursement_amount": "₹50,00,000",
+      "latitude": 25.3176,
+      "longitude": 82.9739,
+      "status": "Paid",
+      "disbursement_date": "2022-11-20"
+    }
+  ]
+}

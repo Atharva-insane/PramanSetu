@@ -1,0 +1,11 @@
+worker_id,name,trade,days_worked,daily_wage
+W-1001,Ramesh Kumar,Mason,26,550
+W-1002,Suresh Yadav,Helper,26,450
+W-1003,Dinesh Verma,Helper,26,450
+W-1004,Aakash Singh,Helper,26,450
+W-1005,Vikram Patel,Supervisor,26,700
+W-1006,Mahesh Chand,Operator,26,700
+W-1007,Pramod Sharma,Mason,26,550
+W-1008,Sunil Gupta,Helper,26,450
+W-1009,Manoj Joshi,Helper,26,450
+W-1010,Santosh Tiwari,Helper,26,450

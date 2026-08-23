@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>PramanSetu (CivicAudit AI) — Complete Simple-Language Application Working Guide</title>
+<style>
+    @page {
+        size: A4 portrait;
+        margin: 18mm 15mm 18mm 15mm;
+        @top-center {
+            content: "PramanSetu (प्रमाण सेतु) — How the Application Works | Complete Working Guide";
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            font-size: 8pt;
+            color: #64748b;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 4px;
+            margin-bottom: 8mm;
+        }
+        @bottom-left {
+            content: "PramanSetu v2.1.0 (Production-Hardened Single-Node Release)";
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            font-size: 8pt;
+            color: #94a3b8;
+        }
+        @bottom-right {
+            content: "Page " counter(page);
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            font-size: 8pt;
+            font-weight: 600;
+            color: #475569;
+        }
+    }
+
+    @page:first {
+        @top-center { content: normal; }
+        @bottom-left { content: normal; }
+        @bottom-right { content: normal; }
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        font-size: 9.5pt;
+        line-height: 1.55;
+        color: #1e293b;
+        background-color: #ffffff;
+        margin: 0;
+        padding: 0;
+    }
+
+    .cover-page {
+        page-break-after: always;
+        height: 100%;
+        min-height: 250mm;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 20mm 10mm 15mm 10mm;
+        border: 2px solid #0284c7;
+        border-radius: 4px;
+        background: linear-gradient(180deg, #f0f9ff 0%, #ffffff 40%, #ffffff 100%);
+    }
+
+    .cover-header {
+        text-align: center;
+    }
+
+    .emblem-pill {
+        display: inline-block;
+        padding: 4px 16px;
+        background: #0284c7;
+        color: #ffffff;
+        font-size: 8.5pt;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        border-radius: 20px;
+        margin-bottom: 12px;
+    }
+
+    .cover-title {
+        font-size: 26pt;
+        font-weight: 800;
+        color: #0f172a;
+        margin: 0 0 6px 0;
+        letter-spacing: -0.5px;
+    }
+
+    .cover-subtitle {
+        font-size: 13pt;
+        font-weight: 600;
+        color: #0369a1;
+        margin: 0 0 16px 0;
+    }
+
+    .cover-desc {
+        font-size: 10pt;
+        color: #475569;
+        max-width: 140mm;
+        margin: 0 auto 20px auto;
+        line-height: 1.5;
+    }
+
+    .meta-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin: 20px 0;
+    }
+
+    .meta-card {
+        padding: 10px 12px;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+
+    .meta-card-label {
+        font-size: 7.5pt;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #64748b;
+        margin-bottom: 3px;
+    }
+
+    .meta-card-val {
+        font-size: 9pt;
+        font-weight: 700;
+        color: #0f172a;
+        font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+
+    .cover-footer {
+        text-align: center;
+        border-top: 1px solid #e2e8f0;
+        padding-top: 12px;
+        font-size: 8pt;
+        color: #64748b;
+    }
+
+    h1 {
+        font-size: 15pt;
+        font-weight: 800;
+        color: #0f172a;
+        border-bottom: 2px solid #0284c7;
+        padding-bottom: 4px;
+        margin-top: 22pt;
+        margin-bottom: 10pt;
+        page-break-after: avoid;
+    }
+
+    h2 {
+        font-size: 12pt;
+        font-weight: 700;
+        color: #0369a1;
+        margin-top: 16pt;
+        margin-bottom: 6pt;
+        page-break-after: avoid;
+    }
+
+    h3 {
+        font-size: 10pt;
+        font-weight: 700;
+        color: #334155;
+        margin-top: 12pt;
+        margin-bottom: 4pt;
+        page-break-after: avoid;
+    }
+
+    p {
+        margin-top: 0;
+        margin-bottom: 8pt;
+        text-align: justify;
+    }
+
+    ul, ol {
+        margin-top: 0;
+        margin-bottom: 8pt;
+        padding-left: 18px;
+    }
+
+    li {
+        margin-bottom: 3pt;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 10pt 0 14pt 0;
+        font-size: 8pt;
+        page-break-inside: avoid;
+    }
+
+    th, td {
+        border: 1px solid #cbd5e1;
+        padding: 5px 7px;
+        text-align: left;
+        vertical-align: top;
+    }
+
+    th {
+        background-color: #f1f5f9;
+        font-weight: 700;
+        color: #0f172a;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f8fafc;
+    }
+
+    code {
+        font-family: 'Consolas', 'Courier New', monospace;
+        font-size: 8.5pt;
+        background-color: #f1f5f9;
+        padding: 1px 4px;
+        border-radius: 3px;
+        color: #0f172a;
+        border: 1px solid #e2e8f0;
+    }
+
+    pre {
+        background-color: #0f172a;
+        color: #f8fafc;
+        padding: 8px 12px;
+        border-radius: 6px;
+        font-size: 8pt;
+        line-height: 1.4;
+        overflow-x: auto;
+        margin: 8pt 0 12pt 0;
+        page-break-inside: avoid;
+    }
+
+    pre code {
+        background: transparent;
+        border: none;
+        color: #f8fafc;
+        padding: 0;
+    }
+
+    blockquote {
+        margin: 8pt 0 10pt 0;
+        padding: 8px 12px;
+        background-color: #f0f9ff;
+        border-left: 3px solid #0284c7;
+        color: #0369a1;
+        font-size: 9pt;
+        border-radius: 0 4px 4px 0;
+        page-break-inside: avoid;
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 1px 5px;
+        font-size: 7.5pt;
+        font-weight: 700;
+        border-radius: 3px;
+    }
+
+    .badge-clear { background: #dcfce7; color: #166534; border: 1px solid #86efac; }
+    .badge-review { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+    .badge-flagged { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
+
+</style>
+</head>
+<body>
+
+<div class="cover-page">
+    <div class="cover-header">
+        <div class="emblem-pill">CIVICAUDIT AI • SIMPLE-LANGUAGE WORKING GUIDE</div>
+        <div class="cover-title">PramanSetu (प्रमाण सेतु)</div>
+        <div class="cover-subtitle">How the Whole Application Actually Works</div>
+        <div class="cover-desc">
+            A complete, simple-language guide explaining every page, feature, forensic algorithm, scoring calculation, database record, and security control—written as if a senior developer friend is explaining it step-by-step.
+        </div>
+        
+        <div class="meta-grid">
+            <div class="meta-card">
+                <div class="meta-card-label">Statutory Mandate</div>
+                <div class="meta-card-val">GFR 2017 Rule 175 & Section 6(1) RTI Act</div>
+            </div>
+            <div class="meta-card">
+                <div class="meta-card-label">Software Version</div>
+                <div class="meta-card-val">v2.1.0 (Production-Hardened Single-Node)</div>
+            </div>
+            <div class="meta-card">
+                <div class="meta-card-label">Automated Verification</div>
+                <div class="meta-card-val">41 / 41 Passing Tests (100% Pass Rate)</div>
+            </div>
+            <div class="meta-card">
+                <div class="meta-card-label">Technology Architecture</div>
+                <div class="meta-card-val">FastAPI 0.115 + Next.js 16.3 + SQLite 3</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cover-footer">
+        <strong>PramanSetu National Forensic Intelligence Gateway</strong><br>
+        Published: August 2026 | Technical Handover & System Architecture Walkthrough
+    </div>
+</div>
+
+<div class="content-body">
+<h1>1. The Big Picture: What is PramanSetu?</h1>
+
+Let’s start with an honest question: <strong>Why does PramanSetu exist in the first place?</strong>
+
+Every year, state governments and municipal corporations spend thousands of crores on public infrastructure: rural paved roads (PMGSY), drinking water pipelines (Jal Jeevan Mission), school classrooms, and stormwater drainage systems.
+
+Historically, the process for paying contractors goes like this:
+1. The contractor finishes a milestone (say, laying 5 km of asphalt road).
+2. The contractor submits paper bills, measurement books, and a few printed photos.
+3. The department disburses public funds from the state treasury via the <strong>Public Financial Management System (PFMS)</strong>.
+4. Months or years later, government auditors review paper files. If the work was fake, substandard, or never done, the money has already left the treasury and is almost impossible to recover.
+
+<h3>Why Photographs and Metadata Aren't Automatically Trustworthy</h3>
+In the age of smartphones, contractors submit digital photos as proof of work. But a digital photo is shockingly easy to manipulate:
+<em> <strong>Asset Recycling:</strong> A contractor submits a photo taken during a </em>2023 pipeline project<em> to claim money for a </em>2024 road project*. To a tired desk officer, both look like dirt and gravel.
+* <strong>Geographic Displacements:</strong> A contractor claims they built a culvert in Varanasi, but took a photo of a culvert in New Delhi (580 km away).
+* <strong>Stock Photo Theft:</strong> A contractor downloads a high-resolution photo of a modern highway from Shutterstock or an online news article.
+* <strong>Ghost Labor Muster Rolls:</strong> A claim lists 31 laborers with fabricated 12-digit Aadhaar numbers and inflated wage sums, but on-site photos show an empty field.
+* <strong>Material Mismatches:</strong> The bill claims "100% Bituminous Asphalt Road Completed," but the uploaded photo shows an unpaved mud track.
+
+<h3>The Core Idea: An Automated "Pre-Disbursement Checkpoint"</h3>
+<strong>PramanSetu</strong> acts as an automated forensic firewall. 
+
+<blockquote><strong>The Airport Security Analogy:</strong></blockquote>
+<blockquote>Think of PramanSetu like the security checkpoint at an airport. Before a passenger (the milestone claim) is allowed to board the airplane (the state treasury payment release), their luggage and boarding pass are scanned across multiple independent detectors: metal detector, X-ray machine, explosive residue swab, and passport passport chip validator. </blockquote>
+<blockquote></blockquote>
+<blockquote>PramanSetu does the exact same thing for public works claims: before money leaves the treasury, it scans the photographic evidence across <strong>ten independent mathematical, geographic, and chronological forensic vectors</strong>.</blockquote>
+
+<code></code>`
+[Contractor Submits Milestone Photo & Metadata]
+                       │
+                       ▼
+    ┌─────────────────────────────────────┐
+    │     10 Multi-Modal Forensic Scans   │
+    │  pHash, Web, GPS, Satellite, Labor, │
+    │  Material, AI Vision, NOAA, EXIF... │
+    └──────────────────┬──────────────────┘
+                       │
+                       ▼
+        [Direct Additive Risk Scorer]
+        (Points summed from 250-pt pool,
+             clamped to 0 - 100)
+                       │
+                       ▼
+       ┌───────────────┴───────────────┐
+       ▼               ▼               ▼
+     CLEAR          REVIEW          FLAGGED
+    (0 - 24)       (25 - 59)       (60 - 100)
+       │               │               │
+  Routine Pay     Physical Check   GFR 175 Hold
+                       │
+                       ▼
+    [Auto-Drafted GFR 175 Show-Cause Dossier]
+                       │
+                       ▼
+   [Deterministic SHA-256 Canonical JSON Seal]
+                       │
+                       ▼
+     [Committed to Persistent SQLite Ledger]
+                       │
+                       ▼
+   [Public Verification & Citizen RTI Gateway]
+<code></code>`
+
+---
+
+<h1>2. The Story of One Audit: Step-by-Step</h1>
+
+To see how all the pieces connect, let's follow a single realistic audit from start to finish.
+
+<h3>Step 1: The Claim Arrives</h3>
+A field engineer or Drawing & Disbursing Officer (DDO) opens the <strong>Forensic Scrutiny Terminal</strong> (<code>/intake</code>). They receive a contractor claim for "Rural Varanasi Bituminous Road Package 01" under the Pradhan Mantri Gram Sadak Yojana (PMGSY), claiming ₹45,00,000 for laying asphalt.
+
+<h3>Step 2: Input & Image Upload</h3>
+The engineer selects the photo and enters the coordinates where the road was supposed to be built (Latitude <code>25.3176°N</code>, Longitude <code>82.9739°E</code>).
+
+<h3>Step 3: Clicking "Execute 10-Vector Forensic Scrutiny"</h3>
+When the user clicks the button:
+1. The browser wraps the image, GPS numbers, and project fields into a standard <code>FormData</code> bundle.
+2. It attaches a digital visitor pass (an <strong>HS256 Bearer JWT token</strong>) to prove the user is an authorized officer.
+3. The request is sent to the FastAPI backend at <code>http://127.0.0.1:8002/api/audit</code>.
+
+<h3>Step 4: Security & Validation Guard</h3>
+Before running any math, the backend security layer kicks in:
+* <strong>Rate Limiter:</strong> Checks that this IP hasn't fired more than 60 requests in the last minute.
+* <strong>Role Check (RBAC):</strong> Verifies the JWT token belongs to an <code>EVALUATOR</code>, <code>DDO</code>, <code>CVO</code>, or <code>ADMIN</code>.
+* <strong>Magic-Byte Inspection:</strong> Reads the first 4 bytes of the uploaded file. If someone renamed a malicious script <code>exploit.php</code> to <code>photo.jpg</code>, the server detects that the header doesn't start with <code>FF D8 FF</code> (JPEG magic bytes) and immediately rejects it.
+
+<h3>Step 5: Ten Forensic Engines Run in Parallel</h3>
+The backend executes 10 Python modules:
+* <strong>Engine 1 (pHash):</strong> Computes a 64-bit Discrete Cosine Transform fingerprint. It discovers this exact photo was already submitted in 2023 for a different water pipeline! (Hamming Distance = 0). <strong>Triggered (+40 points)</strong>.
+* <strong>Engine 2 (Web Scrape):</strong> Checks against stock photography indexes. <strong>Clear (0 points)</strong>.
+* <strong>Engine 3 (GPS Telemetry):</strong> Compares the claimed site in Varanasi against the EXIF metadata inside the photo (which was actually snapped in New Delhi, 580 km away!). <strong>Triggered (+35 points)</strong>.
+* <strong>Engines 4 to 10:</strong> Checks satellite anomaly zones, muster rolls, surface materials, solar elevation, image focus, and AI tamper cues.
+
+<h3>Step 6: Risk Calculation</h3>
+The scoring engine sums the triggered weights:
+$$\text{Total} = 40 + 35 = 75 \text{ points}$$
+Because $75 \ge 60$, the system automatically assigns the verdict <strong>FLAGGED</strong>.
+
+<h3>Step 7: Legal Dossier & Cryptographic Sealing</h3>
+The report engine drafts an administrative <strong>Show-Cause Notice</strong> citing General Financial Rules (GFR 2017) Rule 175 and prepares a payment-hold recommendation. 
+
+Then, the cryptographic service serializes the entire dossier into a standardized (canonical) JSON string and computes a <strong>SHA-256 Integrity Seal</strong> (e.g., <code>e3b0c44298fc1c149afbf4c8...</code>).
+
+<h3>Step 8: Persistent Database Storage</h3>
+The entire record is written to the SQLite database (<code>backend/data/civicaudit.db</code>). It is permanently saved. Even if the server crashes or reboots, the audit, score, and seal are preserved.
+
+<h3>Step 9: What the User Sees</h3>
+Within ~1.5 seconds, the screen updates with a glowing red risk gauge (<code>75 / 100</code>), red warning cards for the triggered vectors, the auto-drafted legal notice, and a QR code linking to the verification portal.
+
+---
+
+<h1>3. Complete Application Map: The 7 Routes</h1>
+
+PramanSetu is organized into 7 distinct routes. Here is what every route is designed to do:
+
+<table><thead><tr><th>Route</th><th>Page Name</th><th>Primary User</th><th>What It Does</th></tr></thead><tbody><tr><td>[<code>/</code>](file:///c:/Users/LENOVO/OneDrive/Desktop/CivicAudit%20AI/CivicAudit%20AI/frontend/app/page.tsx)</td><td><strong>Landing Gateway</strong></td><td>Public, Judges, Evaluators</td><td>Institutional context, legislative references, role selector, live health telemetry.</td></tr><tr><td>[<code>/intake</code>](file:///c:/Users/LENOVO/OneDrive/Desktop/CivicAudit%20AI/CivicAudit%20AI/frontend/app/intake/page.tsx)</td><td><strong>Forensic Scrutiny Terminal</strong></td><td>Field Evaluators, DDOs</td><td>Operational form with 4 quick presets, image upload, muster roll parser, and 10-vector audit execution.</td></tr><tr><td>[<code>/demo</code>](file:///c:/Users/LENOVO/OneDrive/Desktop/CivicAudit%20AI/CivicAudit%20AI/frontend/app/demo/page.tsx)</td><td><strong>Benchmark Evaluation Sandbox</strong></td><td>Judges, Reviewers, Testers</td><td>8 standardized test scenarios covering each fraud mode in isolated <code>is_demo=True</code> mode.</td></tr><tr><td>[<code>/dashboard</code>](file:///c:/Users/LENOVO/OneDrive/Desktop/CivicAudit%20AI/CivicAudit%20AI/frontend/app/dashboard/page.tsx)</td><td><strong>Central Vigilance Ledger</strong></td><td>Chief Vigilance Officers (CVO), DDOs</td><td>Persistent audit log, contractor star-ratings, repeat offender alerts, and sanitized CSV exports.</td></tr><tr><td>[<code>/analytics</code>](file:///c:/Users/LENOVO/OneDrive/Desktop/CivicAudit%20AI/CivicAudit%20AI/frontend/app/analytics/page.tsx)</td><td><strong>Macro Vigilance Cockpit</strong></td><td>Vigilance Directors, Executives</td><td>Interactive GIS map, collusion network graph, March-Rush velocity curve, debarment pipeline.</td></tr><tr><td>[<code>/citizen</code>](file:///c:/Users/LENOVO/OneDrive/Desktop/CivicAudit%20AI/CivicAudit%20AI/frontend/app/citizen/page.tsx)</td><td><strong>Social Audit & RTI Gateway</strong></td><td>Citizens, Gram Panchayats</td><td>Photo evidence upload, plain-language trilingual findings, and auto-generated Section 6(1) Form A RTI petitions.</td></tr><tr><td>[<code>/verify</code>](file:///c:/Users/LENOVO/OneDrive/Desktop/CivicAudit%20AI/CivicAudit%20AI/frontend/app/verify/page.tsx)</td><td><strong>Cryptographic Seal Validator</strong></td><td>General Public, Court Officers</td><td>Recomputes canonical SHA-256 seal from SQLite to verify authenticity and detect database tampering.</td></tr></tbody></table>
+
+---
+
+<h1>4. Page-by-Page Deep Explanation</h1>
+
+---
+
+<h2>PAGE 1 — Landing Command Gateway (<code>/</code>)</h2>
+
+<h3>First, what is this page?</h3>
+Think of this as the main entrance and command center of PramanSetu. It welcomes the user, sets the legal context (GFR 2017 Rule 175), and routes users to the right tool depending on their role.
+
+<h3>What you see:</h3>
+1. <strong>Top Header:</strong> National emblem seal, trilingual typography, live backend operational status pill (<code>● Operational</code> in green), and instant language selector (English / Hindi / Tamil).
+2. <strong>Hero Action Matrix:</strong> Three large glowing cards:
+   * <strong>Launch Pre-Disbursement Scrutiny</strong> (Blue button $\rightarrow$ <code>/intake</code>)
+   * <strong>1-Click Benchmark Suite</strong> (Emerald button $\rightarrow$ <code>/demo</code>)
+   * <strong>Macro Vigilance Cockpit</strong> (Purple button $\rightarrow$ <code>/analytics</code>)
+3. <strong>Four-Step Visual Pipeline:</strong> Intake $\rightarrow$ 10-Vector Scan $\rightarrow$ Risk Score $\rightarrow$ Legal Dossier.
+4. <strong>Persona Gateway Grid:</strong> 4 cards explaining capabilities for Citizen, Evaluator, DDO, and CVO.
+
+<h3>What happens behind the scenes:</h3>
+* The page checks <code>GET /api/health</code> to confirm the FastAPI backend is responsive.
+* If the user selects <strong>हिंदी</strong> or <strong>தமிழ்</strong>, the <code>LanguageContext</code> re-renders all text instantaneously without a full page reload and stores the preference in the browser's <code>localStorage</code>.
+
+---
+
+<h2>PAGE 2 — Pre-Disbursement Forensic Intake (<code>/intake</code>)</h2>
+
+<h3>First, what is this page?</h3>
+This is the heart of the operational system. It is where engineers, auditors, and disbursing officers evaluate real milestone claims.
+
+<h3>The 4 Quick-Presets:</h3>
+To make demonstration fast and reproducible, the top of the page features 4 one-click presets:
+1. <strong>1. Clean PMGSY Road:</strong> Genuine rural road; matching GPS coordinates (<code>25.3176°N, 82.9739°E</code>); all 10 vectors pass $\rightarrow$ Score <code>0-10 (CLEAR)</code>.
+2. <strong>2. Reused Asset Recycling:</strong> Recycled 2023 pipeline photo submitted for a 2024 claim $\rightarrow$ Vector 1 triggers $\rightarrow$ Score <code>85-95 (FLAGGED)</code>.
+3. <strong>3. 580km Location Mismatch:</strong> Claimed site in Varanasi, but photo EXIF proved it was taken in Delhi $\rightarrow$ Vector 3 triggers $\rightarrow$ Score <code>75-85 (FLAGGED)</code>.
+4. <strong>4. Ghost Labor Muster Roll:</strong> 31 claimed workers on roll, 0 on-site faces, fake Aadhaar numbers failing Verhoeff D5 algorithm $\rightarrow$ Vector 5 triggers $\rightarrow$ Score <code>80-90 (FLAGGED)</code>.
+
+<h3>Every Input Field Explained:</h3>
+* <strong>Evidence Image Upload:</strong> Accepts JPEG, PNG, WebP up to 15MB. Renders an instant canvas preview.
+* <strong>Project Name & Scheme:</strong> Identifies the public work (e.g., PMGSY, Jal Jeevan Mission, Smart Cities).
+* <strong>Contractor Name:</strong> Matches against registered vendors in SQLite.
+* <strong>Claim Amount (₹):</strong> The invoice amount being evaluated for disbursement.
+* <strong>Claimed Latitude & Longitude:</strong> The exact WGS-84 coordinates where the physical asset is supposed to exist.
+* <strong>Claimed Material:</strong> The milestone stage (e.g., "100% Asphalt Bituminous Pavement", "RCC Slab", "PCC Bedding").
+* <strong>Labor Muster Roll (CSV):</strong> Uploads tabular daily labor logs for Aadhaar checksum verification.
+
+<h3>What happens when you click "Execute 10-Vector Forensic Scrutiny"?</h3>
+1. <strong>Frontend:</strong> Synthesizes the canvas blob and metadata into a <code>FormData</code> object.
+2. <strong>API Call:</strong> Sends <code>POST /api/audit</code> with an <code>Authorization: Bearer <JWT></code> header.
+3. <strong>Backend Execution:</strong> 10 Python forensic services analyze the payload.
+4. <strong>Scoring:</strong> Points are calculated by <code>scoring_service.py</code> and clamped between 0 and 100.
+5. <strong>Dossier Compilation:</strong> <code>report_service.py</code> generates the GFR 175 show-cause notice and UUID dossier ID.
+6. <strong>Crypto Sealing:</strong> <code>crypto_service.py</code> serializes canonical JSON and computes the SHA-256 digest.
+7. <strong>SQLite Persistence:</strong> Inserts the audit row into <code>civicaudit.db</code>.
+8. <strong>UI Render:</strong> The results section smoothly expands with:
+   * A circular risk gauge (Green for Clear, Amber for Review, Red for Flagged).
+   * 10 forensic vector status cards with triggered badges and technical evidence.
+   * Auto-drafted GFR 175 Administrative Show-Cause Notice.
+   * <strong>Software Keyed HMAC Signature Stamp</strong> button to apply officer sign-off.
+
+---
+
+<h2>PAGE 3 — Benchmark Evaluation Sandbox (<code>/demo</code>)</h2>
+
+<h3>First, what is this page?</h3>
+This is a dedicated evaluative sandbox containing <strong>8 standardized test scenarios</strong>. It allows evaluators, judges, and reviewers to test every failure mode of the 10 forensic algorithms without affecting real contractor ratings.
+
+<h3>The 8 Standardized Scenarios:</h3>
+
+<table><thead><tr><th>#</th><th>Scenario Title</th><th>Primary Failure Mode Tested</th><th>Expected Score & Verdict</th></tr></thead><tbody><tr><td><strong>1</strong></td><td><strong>Authentic Infrastructure</strong></td><td>Clean physical progress, matching coordinates, verified telemetry</td><td><code>0 – 10 (CLEAR)</code></td></tr><tr><td><strong>2</strong></td><td><strong>Past Reused Asset Recycling</strong></td><td>Recycled 2023 pipeline photo (64-bit DCT pHash distance = 0)</td><td><code>85 – 95 (FLAGGED)</code></td></tr><tr><td><strong>3</strong></td><td><strong>580km Location Mismatch</strong></td><td>Photo GPS in Delhi, claimed project site in Varanasi</td><td><code>75 – 85 (FLAGGED)</code></td></tr><tr><td><strong>4</strong></td><td><strong>Web Stock Photo Theft</strong></td><td>Stock image stolen from Shutterstock database</td><td><code>80 – 90 (FLAGGED)</code></td></tr><tr><td><strong>5</strong></td><td><strong>Ghost Labor & Muster Roll</strong></td><td>31 claimed workers; invalid Aadhaar Verhoeff D5 checksums</td><td><code>80 – 90 (FLAGGED)</code></td></tr><tr><td><strong>6</strong></td><td><strong>Material Milestone Mismatch</strong></td><td>Finished asphalt claimed on raw dirt/mud track</td><td><code>65 – 75 (FLAGGED)</code></td></tr><tr><td><strong>7</strong></td><td><strong>Chrono & Weather Anomaly</strong></td><td>Direct bright sunlight claimed during heavy monsoon rainfall</td><td><code>55 – 65 (FLAGGED)</code></td></tr><tr><td><strong>8</strong></td><td><strong>Sub-2KB Degraded Payload</strong></td><td>Severely downscaled thumbnail with stripped metadata</td><td><code>35 – 45 (REVIEW)</code></td></tr></tbody></table>
+
+<h3>Demo Data Isolation (<code>is_demo=True</code>):</h3>
+When a scenario is run from <code>/demo</code>, the request transmits <code>is_demo=True</code>. The backend persists the audit as <code>audit_type='DEMO'</code> and <strong>does not deduct points from the contractor's real integrity scorecard</strong>, keeping the production ledger clean.
+
+---
+
+<h2>PAGE 4 — Central Vigilance Ledger (<code>/dashboard</code>)</h2>
+
+<h3>First, what is this page?</h3>
+The persistent repository of all completed audits, contractor scorecards, repeat-offender alerts, and sanitized data export tools.
+
+<h3>Key Features:</h3>
+1. <strong>Contractor Integrity Leaderboard:</strong> Displays contractor names, dynamic trust ratings (0–100%), star ratings (1.0–5.0), past violation counts, and repeat-offender warning badges.
+2. <strong>Audit History Table:</strong> Lists dossier IDs, project names, risk scores, verdicts, record types (<code>REAL</code> vs <code>DEMO</code>), and SHA-256 integrity confirmation badges (<code>MATCH_CONFIRMED</code>).
+3. <strong>Search & Filter:</strong> Real-time filtering by contractor name, scheme, or verdict (<code>CLEAR</code> / <code>REVIEW</code> / <code>FLAGGED</code>).
+4. <strong>Formula-Safe CSV Export:</strong> The <strong>Export CSV</strong> button downloads all audit records. To protect users from spreadsheet vulnerabilities, the export runs through <code>escapeCsvCell()</code>, prepending a single quote (<code>'</code>) to any cell starting with <code>=</code>, <code>+</code>, <code>-</code>, <code>@</code>, <code>\t</code>, or <code>\r</code>.
+
+---
+
+<h2>PAGE 5 — Macro Vigilance Cockpit & Analytics (<code>/analytics</code>)</h2>
+
+<h3>First, what is this page?</h3>
+An executive oversight dashboard designed for Chief Vigilance Officers (CVO) to detect regional corruption patterns, cartel collusion, and fiscal year-end spending spikes.
+
+<h3>The 4 Analytics Views:</h3>
+1. <strong>1. GIS Fraud Heatmap:</strong> An interactive Leaflet map rendering live OpenStreetMap tiles. It plots dynamic project markers from the SQLite database alongside red circular <strong>Anomaly Fraud Zones</strong> (e.g., Prayagraj, Yamuna Floodplain, Patna).
+2. <strong>2. Contractor Collusion Syndicate Network:</strong> An interactive topological graph mapping shared directors, phone numbers, and joint bank accounts across bidding syndicates.
+3. <strong>3. March-Rush Expenditure Velocity:</strong> A multi-month spending bar chart highlighting the annual Q4 spike where fraudulent claims jump by 3.8x baseline volume.
+4. <strong>4. Inter-Departmental Debarment Pipeline:</strong> Case tracking table showing proceedings from GFR 175 show-cause notices to Performance Bank Guarantee (PBG) seizures and GeM portal blacklisting.
+
+---
+
+<h2>PAGE 6 — Citizen Social Audit & RTI Gateway (<code>/citizen</code>)</h2>
+
+<h3>First, what is this page?</h3>
+Empowers grassroots citizens, village social audit committees, and RTI activists to inspect public works and demand accountability without legal expertise.
+
+<h3>How it works:</h3>
+1. <strong>Citizen Upload:</strong> A villager uploads an on-site photo and enters the project name, panchayat, and inspection notes.
+2. <strong>Instant Plain-Language Finding:</strong> The backend analyzes the photo and returns an easily understandable card in Hindi, Tamil, or English (e.g., <em>"Photo shows unpaved mud road, but contractor claimed 100% completion"</em>).
+3. <strong>Automated Section 6(1) Form A RTI Petition:</strong> The system auto-generates a formatted legal RTI application pre-filled with the Public Information Officer (PIO) address, project details, and a dynamic <strong>30-day statutory response deadline countdown</strong>.
+4. <strong>Print / Copy:</strong> The citizen can copy the text or click <strong>Print Petition</strong> to generate a clean, physical submission document.
+
+---
+
+<h2>PAGE 7 — Public Cryptographic Seal Validator (<code>/verify</code>)</h2>
+
+<h3>First, what is this page?</h3>
+A public authenticity verification portal where anyone (a citizen, journalist, or court officer) can input a Dossier ID to verify that a government audit report is genuine and has not been altered in the database.
+
+<h3>The 3 Verification Outcomes:</h3>
+
+<code></code>`
+                  [User Inputs Dossier ID]
+                             │
+                             ▼
+                 [Query SQLite civicaudit.db]
+                             │
+            ┌────────────────┴────────────────┐
+            │                                 │
+      [Row Found]                       [Row Not Found]
+            │                                 │
+    [Canonicalize JSON]                       ▼
+    [Recompute SHA-256]               HTTP 404 Not Found
+            │                         (Red "Missing ID" Box)
+    ┌───────┴────────┐
+    ▼                ▼
+[Hashes Match]   [Hashes Differ]
+    │                │
+    ▼                ▼
+200 OK (Green)   200 OK (Red)
+"Authentic Seal" "Tamper Detected"
+<code></code>`
+
+1. <strong>Authentic Verified (Green Certificate):</strong> The recomputed SHA-256 hash matches the stored seal. Ledger integrity is confirmed unaltered.
+2. <strong>Dossier Not Found (HTTP 404 Red Banner):</strong> The entered ID does not exist in the database.
+3. <strong>Tamper Detected (Red Warning Banner):</strong> The database row was altered after the initial audit, causing the recomputed SHA-256 hash to mismatch the stored seal.
+
+---
+
+<h1>5. The Ten Forensic Vectors: Explained Like a Friend</h1>
+
+Every claim is evaluated across <strong>10 independent scoring engines</strong>. Here is exactly how each engine works:
+
+---
+
+<h3>Vector 1: Perceptual Image Hashing (pHash) — Asset Recycling</h3>
+* <strong>In one sentence:</strong> Catches contractors who submit the same photo across multiple claims or years.
+* <strong>Everyday Analogy:</strong> Think of pHash like a human fingerprint. Even if you resize the image, slightly crop it, or adjust the brightness, the overall structure (the fingerprint) remains identical.
+* <strong>Technical Algorithm:</strong> Converts the photo to grayscale, resizes to $32 \times 32$, computes a 2D Discrete Cosine Transform (DCT), and generates a 64-bit binary fingerprint. It compares this against past submissions using <strong>Hamming Distance</strong>.
+* <strong>Trigger Threshold:</strong> Hamming Distance $\le 5$ bits.
+* <strong>Weight Contribution:</strong> <strong>40 Risk Points</strong>.
+
+---
+
+<h3>Vector 2: Web Reverse Image Search — Stock Photo Theft</h3>
+* <strong>In one sentence:</strong> Catches contractors who steal photos from Google, Shutterstock, or Wikipedia instead of visiting the real site.
+* <strong>Everyday Analogy:</strong> Like Google Reverse Image Search running inside the auditor's terminal.
+* <strong>Technical Algorithm:</strong> Computes dense image feature vectors and measures cosine similarity against a database of indexed internet construction photos.
+* <strong>Trigger Threshold:</strong> Feature Cosine Similarity $\ge 0.85$.
+* <strong>Weight Contribution:</strong> <strong>40 Risk Points</strong>.
+
+---
+
+<h3>Vector 3: Geodesic Spatial Distance Check — Off-Site Photography</h3>
+* <strong>In one sentence:</strong> Checks if the photo was taken at the actual project site or somewhere hundreds of kilometers away.
+* <strong>Everyday Analogy:</strong> If a contractor says they paved a road in Varanasi, but the smartphone GPS records the photo in New Delhi, the claim is clearly fraudulent.
+* <strong>Technical Algorithm:</strong> Extracts EXIF GPS tags from the photo and calculates the geodesic distance to the claimed site using the <strong>WGS-84 Vincenty / Haversine formula</strong>.
+* <strong>Trigger Thresholds:</strong>
+  * $\le 500\text{ m}$: <code>MATCH</code> (0 points).
+  * $500\text{ m} - 1500\text{ m}$: <code>REVIEW</code> (Warning, 0 mismatch points).
+  * $> 1500\text{ m}$: <code>MISMATCH</code> (<strong>+35 Risk Points</strong>).
+
+---
+
+<h3>Vector 4: Satellite Ground-Truth Anomaly Zones</h3>
+* <strong>In one sentence:</strong> Cross-references GPS coordinates with known environmental hazard perimeters and restricted floodplains.
+* <strong>Everyday Analogy:</strong> Like a GPS fence warning you that the claimed construction site is actually in the middle of a riverbed.
+* <strong>Technical Algorithm:</strong> Ray-casting <strong>Point-in-Polygon (PIP)</strong> geospatial algorithm against defined anomaly coordinates (e.g., active floodplains).
+* <strong>Trigger Threshold:</strong> Coordinate point falls inside an active anomaly polygon.
+* <strong>Weight Contribution:</strong> <strong>30 Risk Points</strong>.
+
+---
+
+<h3>Vector 5: Ghost Labor Muster Roll & Aadhaar Checksum</h3>
+* <strong>In one sentence:</strong> Detects fake workers, duplicate names, and fabricated Aadhaar numbers on daily labor rolls.
+* <strong>Everyday Analogy:</strong> Like a bank verifying that a credit card number follows a mathematical formula before accepting a transaction.
+* <strong>Technical Algorithm:</strong> Parses CSV muster rolls, validates worker Aadhaar numbers using the <strong>Verhoeff D5 dihedral group algorithm</strong> (the official UIDAI checksum), and flags wage payouts exceeding statutory caps.
+* <strong>Trigger Threshold:</strong> Checksum failure rate $> 15\%$ or wage discrepancies.
+* <strong>Weight Contribution:</strong> <strong>30 Risk Points</strong>.
+
+---
+
+<h3>Vector 6: Visual Milestone Material Classifier</h3>
+* <strong>In one sentence:</strong> Verifies that the physical material visible in the photo matches what the contractor billed for.
+* <strong>Everyday Analogy:</strong> If the invoice says "Finished Bituminous Asphalt" but the photo shows unpaved mud and dirt, the machine flags the mismatch.
+* <strong>Technical Algorithm:</strong> Softmax probability distribution over material classes (<code>Asphalt Road</code>, <code>Mud Track</code>, <code>Concrete Pavement</code>, <code>Excavation Trench</code>).
+* <strong>Trigger Threshold:</strong> Claimed material does not match detected surface.
+* <strong>Weight Contribution:</strong> <strong>25 Risk Points</strong>.
+
+---
+
+<h3>Vector 7: Multimodal AI Vision Tamper Analysis</h3>
+* <strong>In one sentence:</strong> Uses advanced AI vision to spot digital manipulations, Photoshop edits, and AI-generated image artifacts.
+* <strong>Everyday Analogy:</strong> An experienced forensic photo examiner inspecting pixel lighting, shadows, and clone stamps.
+* <strong>Technical Algorithm:</strong> Google Gemini 2.0 Flash Vision API analyzing visual cues, with automatic fallback to <strong>Shannon Entropy gradient variance</strong> when offline.
+* <strong>Trigger Threshold:</strong> AI confidence score $\ge 0.70$ indicating synthetic or tampered cues.
+* <strong>Weight Contribution:</strong> <strong>20 Risk Points</strong>.
+
+---
+
+<h3>Vector 8: Chrono-Solar & Weather Forensics</h3>
+* <strong>In one sentence:</strong> Verifies whether the sun position and weather in the photo match the claimed date and time.
+* <strong>Everyday Analogy:</strong> If a contractor claims a photo was taken at 2:00 PM on a bright July afternoon, but the shadows show the sun is at a morning angle or the sky is cloudless during a recorded torrential monsoon downpour, the timestamp is fake.
+* <strong>Technical Algorithm:</strong> <strong>NOAA Solar Position Algorithm (SPA)</strong> computes the solar elevation angle $\alpha$ and azimuth $\theta$ for the exact timestamp and coordinates.
+* <strong>Trigger Threshold:</strong> Solar angle discrepancy $> 15^\circ$ or weather mismatch.
+* <strong>Weight Contribution:</strong> <strong>15 Risk Points</strong>.
+
+---
+
+<h3>Vector 9: EXIF Hardware GPS Integrity Check</h3>
+* <strong>In one sentence:</strong> Flags photos that have had their camera metadata deliberately stripped or scrubbed.
+* <strong>Everyday Analogy:</strong> Like an unsigned official document missing its government seal and timestamp.
+* <strong>Technical Algorithm:</strong> Scans the binary EXIF header for camera make, model, timestamp, and GPS IFD blocks.
+* <strong>Trigger Threshold:</strong> GPS coordinates missing or EXIF header completely stripped.
+* <strong>Weight Contribution:</strong> <strong>10 Risk Points</strong>.
+
+---
+
+<h3>Vector 10: Image Quality & Deliberate Blur Detection</h3>
+* <strong>In one sentence:</strong> Detects severely blurred or downscaled photos submitted intentionally to hide shoddy construction work.
+* <strong>Everyday Analogy:</strong> If a student submits an illegible, smeared exam paper so the teacher can't see the wrong answers.
+* <strong>Technical Algorithm:</strong> Computes the <strong>Laplacian focus variance</strong> ($\sigma^2$) across high-frequency edges.
+* <strong>Trigger Threshold:</strong> $\sigma^2 < 100$ (severe blur) or file size $< 2\text{ KB}$.
+* <strong>Weight Contribution:</strong> <strong>5 Risk Points</strong>.
+
+---
+
+<h1>6. The 250-Point Additive Scoring Model</h1>
+
+<h3>Why 250 Total Capacity?</h3>
+The system has 10 vectors with weights adding up to 250 points:
+$$40 + 40 + 35 + 30 + 30 + 25 + 20 + 15 + 10 + 5 = 250 \text{ points}$$
+
+Why not 100? Because in high-stakes public procurement fraud, multiple catastrophic violations often occur simultaneously (e.g., a recycled photo + 500 km location mismatch + fake muster roll = $40 + 35 + 30 = 105$ points). The 250-point capacity ensures that every vector has full mathematical weight.
+
+<h3>The Clamped Formula:</h3>
+$$\text{Total Score} = \sum_{i=1}^{10} \text{Weight}_i \times \mathbb{I}(\text{Vector}_i = \text{TRIGGERED})$$
+$$\mathbf{\text{Final Risk Score}} = \mathbf{\min(100, \max(0, \text{Total Score}))}$$
+
+<h3>The Three Decision Thresholds:</h3>
+
+<code></code>`
+[0 ───────────────── 24] ───► CLEAR    (Approved for routine treasury release)
+[25 ──────────────── 59] ───► REVIEW   (Provisional hold: requires physical field re-inspection)
+[60 ─────────────── 100] ───► FLAGGED  (Payment hold: auto-drafts GFR 175 Show-Cause Directive)
+<code></code>`
+
+<h3>Worked Calculation Examples:</h3>
+* <strong>Example A (Single Moderate Issue):</strong> Missing GPS metadata triggers Vector 9 (+10 points). 
+  $$\text{Total} = 10 \rightarrow \text{Final} = 10 \rightarrow \mathbf{CLEAR}$$
+* <strong>Example B (Material Mismatch):</strong> Asphalt claimed on mud triggers Vector 6 (+25 points).
+  $$\text{Total} = 25 \rightarrow \text{Final} = 25 \rightarrow \mathbf{REVIEW}$$
+* <strong>Example C (Major Fraud):</strong> Reused asset (+40) and 580km GPS mismatch (+35).
+  $$\text{Total} = 75 \rightarrow \text{Final} = 75 \rightarrow \mathbf{FLAGGED}$$
+* <strong>Example D (Catastrophic Multi-Vector Fraud):</strong> Vectors 1 (+40), 2 (+40), 3 (+35), 5 (+30), and 6 (+25) all trigger.
+  $$\text{Total} = 170 \rightarrow \text{Final} = \min(100, 170) = \mathbf{100 \ (FLAGGED)}$$
+
+---
+
+<h1>7. Security, Authentication & Cryptography</h1>
+
+---
+
+<h3>Authentication & Passwords</h3>
+* <strong>Password Hashing:</strong> Uses <strong>PBKDF2-HMAC-SHA256</strong> with 100,000 iterations and a cryptographically secure 16-byte random salt. Plaintext passwords are never stored.
+* <strong>JWT Tokens:</strong> When an officer logs in, the backend issues an <strong>HS256-signed Bearer JWT</strong> valid for 24 hours. The token contains the user's role (<code>EVALUATOR</code>, <code>DDO</code>, <code>CVO</code>, <code>ADMIN</code>, <code>CITIZEN</code>).
+* <strong>Logout:</strong> Client-side token disposal. The frontend removes the token from memory and <code>localStorage</code>.
+
+<h3>401 Unauthorized vs. 403 Forbidden</h3>
+* <strong>401 Unauthorized:</strong> The user has not provided a valid token (not logged in or token expired).
+* <strong>403 Forbidden:</strong> The user is logged in, but their role lacks permission (e.g., a <code>CITIZEN</code> attempting to call the officer-only <code>/api/pki/sign</code> endpoint).
+
+<h3>Sliding-Window Rate Limiting</h3>
+To prevent Denial of Service (DoS) attacks and external AI wallet depletion, an in-memory token bucket limits requests:
+* Audits: 60 requests / minute.
+* Citizen Reports: 30 requests / minute.
+* Public Verifications: 120 requests / minute.
+<em> </em>If exceeded:* Returns <code>HTTP 429 Too Many Requests</code> with a <code>Retry-After: 30</code> header.
+
+<h3>File Upload Hardening</h3>
+* Files are capped at <strong>15 MB</strong>.
+* The server reads binary magic bytes (<code>FF D8 FF</code> for JPEG, <code>89 50 4E 47</code> for PNG, <code>52 49 46 46</code> for WebP). Renaming <code>malicious.exe</code> to <code>photo.jpg</code> is immediately blocked.
+
+<h3>What SHA-256 Does (and Does NOT) Guarantee</h3>
+* <strong>What it DOES guarantee:</strong> If a database row is modified by even one character (e.g., changing a Risk Score from <code>75</code> to <code>20</code>), the recomputed SHA-256 seal will change completely, instantly exposing the tampering.
+<em> <strong>What it does NOT guarantee:</strong> SHA-256 is a symmetric cryptographic digest, not an asymmetric hardware digital signature. It proves </em>data consistency*, but if a rogue database administrator alters both the record and the stored seal at the exact same moment, SHA-256 alone cannot detect it without an external immutable timestamp ledger.
+
+---
+
+<h1>8. Real Implementation vs. Demo / Simulated Truth Matrix</h1>
+
+To ensure absolute technical honesty, here is the official classification of every capability:
+
+<table><thead><tr><th>Feature / Component</th><th>Technical Reality in Source Code</th><th>Official Classification</th></tr></thead><tbody><tr><td><strong>10 Python Forensic Engines</strong></td><td>Genuine OpenCV, NumPy, WGS-84, NOAA SPA, and Verhoeff D5 math</td><td><strong>REAL IMPLEMENTATION</strong></td></tr><tr><td><strong>Composite Risk Scoring (0–100)</strong></td><td>Direct additive accumulator clamped from 250-pt capacity</td><td><strong>REAL IMPLEMENTATION</strong></td></tr><tr><td><strong>Persistent SQLite Storage</strong></td><td>ACID-compliant storage in <code>backend/data/civicaudit.db</code></td><td><strong>REAL IMPLEMENTATION</strong></td></tr><tr><td><strong>Deterministic SHA-256 Seal</strong></td><td>Canonical JSON serialization and recomputed digest check</td><td><strong>REAL IMPLEMENTATION</strong></td></tr><tr><td><strong>JWT Auth & Backend RBAC</strong></td><td>HS256 tokens and <code>require_roles</code> route guards</td><td><strong>REAL IMPLEMENTATION</strong></td></tr><tr><td><strong>Sliding-Window Rate Limiter</strong></td><td>In-memory token bucket per IP / user identity</td><td><strong>REAL IMPLEMENTATION</strong></td></tr><tr><td><strong>CSV Formula Injection Defense</strong></td><td><code>escapeCsvCell()</code> single-quote prepender</td><td><strong>REAL IMPLEMENTATION</strong></td></tr><tr><td><strong>Trilingual Localization Engine</strong></td><td>React Context + persistent <code>localStorage</code> (EN / HI / TA)</td><td><strong>REAL IMPLEMENTATION</strong></td></tr><tr><td><strong>Section 6(1) Form A RTI Generator</strong></td><td>Auto-filled legal petition with 30-day statutory countdown</td><td><strong>REAL IMPLEMENTATION</strong></td></tr><tr><td><strong>Software PKI Signature Adapter</strong></td><td>Keyed HMAC-SHA256 signature stamp generator</td><td><strong>DEVELOPMENT ONLY</strong></td></tr><tr><td><strong>Hardware PKCS#11 USB Token</strong></td><td>Uninstantiated driver wrapper interface</td><td><strong>NOT IMPLEMENTED</strong></td></tr><tr><td><strong>Treasury Fund Freeze</strong></td><td>Auto-drafts GFR 175 administrative notice (not direct PFMS call)</td><td><strong>SIMULATED / ADVISORY</strong></td></tr><tr><td><strong>Historical Claims Database</strong></td><td><code>backend/mock_db.json</code> (5 static benchmark cases)</td><td><strong>MOCK / REFERENCE</strong></td></tr><tr><td><strong>Web Stock Photo Index</strong></td><td><code>backend/mock_web_db.json</code> (3 static benchmark cases)</td><td><strong>MOCK / REFERENCE</strong></td></tr><tr><td><strong>Collusion Syndicate Graph</strong></td><td>Curated topological SVG network in analytics</td><td><strong>STATIC DEMO</strong></td></tr><tr><td><strong>Multimodal AI Vision</strong></td><td>Google Gemini 2.0 Flash REST API</td><td><strong>EXTERNAL DEPENDENCY</strong></td></tr><tr><td><strong>Offline Visual Fallback</strong></td><td>Local Shannon Entropy gradient variance analyzer</td><td><strong>REAL IMPLEMENTATION</strong></td></tr></tbody></table>
+
+---
+
+<h1>9. A Full Day in the Life: Evaluator Rahul</h1>
+
+To see how PramanSetu works in practice, let’s follow a day in the life of <strong>Rahul</strong>, a Sub-Divisional Engineer in Uttar Pradesh:
+
+* <strong>09:30 AM — Receiving the Claim:</strong> Rahul logs in as an <code>EVALUATOR</code>. He receives an invoice for ₹42,50,000 for a rural drinking water pipeline in Prayagraj under the Jal Jeevan Mission.
+* <strong>09:45 AM — Running Scrutiny on <code>/intake</code>:</strong> Rahul enters the project details, sets the claimed GPS coordinates, and uploads the contractor's milestone photo. He clicks <strong>Execute 10-Vector Forensic Scrutiny</strong>.
+* <strong>09:47 AM — The Flag:</strong> The screen flashes <strong>Risk Score: 92 (FLAGGED)</strong>. Engine 1 detects that the photo has a Hamming Distance of <code>0</code>—it is identical to a photo submitted in 2023 for a different project.
+* <strong>10:00 AM — Drafting the Directive:</strong> PramanSetu compiles an administrative Show-Cause Notice citing GFR 2017 Rule 175. Rahul clicks <strong>Apply Software Signature Stamp</strong>, sealing the dossier with ID <code>DOSSIER-202608-PRY-02</code>.
+* <strong>11:30 AM — CVO Oversight on <code>/analytics</code>:</strong> The Chief Vigilance Officer opens the Macro Cockpit. The Prayagraj case appears as an active red hotspot on the GIS map. The Collusion Graph highlights that the same contractor is bidding under two sister companies.
+* <strong>02:00 PM — Citizen Social Audit on <code>/citizen</code>:</strong> In the village, a resident uses the Citizen Portal to upload a photo of the dry pipeline. The system confirms the incomplete work and generates a pre-filled Section 6(1) Form A RTI application.
+* <strong>04:00 PM — Public Verification on <code>/verify</code>:</strong> The citizen types <code>DOSSIER-202608-PRY-02</code> into the verification portal. The green certificate appears, confirming that the payment hold was officially registered in the vigilance ledger.
+
+---
+
+<h1>10. Master Interaction Table: Every Button & Click</h1>
+
+<table><thead><tr><th>Page</th><th>Button / Control</th><th>User Action</th><th>Frontend State</th><th>API Endpoint</th><th>Backend Service</th><th>Database Action</th><th>Final UI Update</th></tr></thead><tbody><tr><td><strong>Header</strong></td><td>Language Selector</td><td>Click <code>हिंदी</code> / <code>தமிழ்</code></td><td>Updates <code>language</code> state</td><td>None (Local)</td><td>None</td><td>Persists to <code>localStorage</code></td><td>Re-renders all text instantly</td></tr><tr><td><strong>Header</strong></td><td>Health Telemetry Pill</td><td>Automatic on load</td><td>Polls health status</td><td><code>GET /api/health</code></td><td><code>main.py</code></td><td>None</td><td>Displays green <code>Operational</code> pill</td></tr><tr><td><strong><code>/intake</code></strong></td><td>Preset Card (1–4)</td><td>Click preset card</td><td>Populates form & canvas</td><td>None (Local)</td><td>None</td><td>None</td><td>Form fields & image preview fill</td></tr><tr><td><strong><code>/intake</code></strong></td><td>Execute Audit</td><td>Click submit button</td><td>Sets <code>isLoading=true</code></td><td><code>POST /api/audit</code></td><td>10 Forensic Engines + Scorer</td><td><code>INSERT INTO audits</code></td><td>Displays risk gauge & dossier</td></tr><tr><td><strong><code>/intake</code></strong></td><td>Apply DSC Stamp</td><td>Click signature button</td><td>Attaches stamp</td><td><code>POST /api/pki/sign</code></td><td><code>pki_service.py</code></td><td><code>UPDATE audits</code></td><td>Shows signed cryptographic block</td></tr><tr><td><strong><code>/demo</code></strong></td><td>Benchmark Scenario (1–8)</td><td>Click scenario button</td><td>Transmits demo payload</td><td><code>POST /api/audit</code></td><td>10 Engines (<code>is_demo=True</code>)</td><td><code>INSERT INTO audits (audit_type='DEMO')</code></td><td>Shows score; preserves ratings</td></tr><tr><td><strong><code>/dashboard</code></strong></td><td>Export CSV</td><td>Click export button</td><td>Sanitizes formula cells</td><td><code>GET /api/audits</code></td><td><code>main.py</code></td><td><code>SELECT FROM audits</code></td><td>Downloads <code>.csv</code> file to disk</td></tr><tr><td><strong><code>/dashboard</code></strong></td><td>Search / Filter</td><td>Type in search box</td><td>Filters <code>audits</code> array</td><td>None (Local)</td><td>None</td><td>None</td><td>Table filters rows in real time</td></tr><tr><td><strong><code>/analytics</code></strong></td><td>Tab Switcher (1–4)</td><td>Click tab button</td><td>Sets <code>activeTab</code></td><td><code>GET /api/analytics/*</code></td><td><code>analytics_service.py</code></td><td><code>SELECT FROM audits</code></td><td>Renders Map, Graph, or Charts</td></tr><tr><td><strong><code>/citizen</code></strong></td><td>Submit Evidence</td><td>Click submit report</td><td>Sets submitting state</td><td><code>POST /api/citizen/report</code></td><td><code>citizen_service.py</code></td><td><code>INSERT INTO citizen_reports</code></td><td>Displays RTI Form A & countdown</td></tr><tr><td><strong><code>/citizen</code></strong></td><td>Copy / Print Petition</td><td>Click copy/print</td><td>Copies to clipboard / Print</td><td>None (Local)</td><td>None</td><td>None</td><td>Opens browser print dialog</td></tr><tr><td><strong><code>/verify</code></strong></td><td>Verify Seal</td><td>Input ID & click verify</td><td>Sets checking state</td><td><code>GET /api/verify/{id}</code></td><td><code>crypto_service.py</code></td><td><code>SELECT FROM audits WHERE id=?</code></td><td>Shows Green, 404, or Tampered box</td></tr></tbody></table>
+
+---
+
+<h1>11. Troubleshooting: What Happens When Things Go Wrong?</h1>
+
+<table><thead><tr><th>Symptom / Error</th><th>What Caused It</th><th>What You See on Screen</th><th>Immediate Fix</th></tr></thead><tbody><tr><td><strong>HTTP 401 Unauthorized</strong></td><td>Missing, expired, or invalid Bearer JWT token</td><td>Red error toast: <em>"Unauthorized"</em></td><td>Log in via the demonstration environment to refresh your session token.</td></tr><tr><td><strong>HTTP 403 Forbidden</strong></td><td>Authenticated user lacks required role permissions</td><td>Red banner: <em>"Forbidden: Insufficient role"</em></td><td>Switch to an officer account with <code>DDO</code>, <code>CVO</code>, or <code>ADMIN</code> permissions.</td></tr><tr><td><strong>HTTP 404 Not Found</strong></td><td>Entered Dossier ID does not exist in SQLite</td><td>Red box: <em>"Dossier Not Found (404)"</em></td><td>Check the Dossier ID from the Ledger on <code>/dashboard</code> and re-enter.</td></tr><tr><td><strong>HTTP 413 Payload Too Large</strong></td><td>Uploaded image exceeds 15 MB cap</td><td>Upload error: <em>"File exceeds 15MB"</em></td><td>Resize or compress the photo before uploading.</td></tr><tr><td><strong>HTTP 429 Too Many Requests</strong></td><td>Exceeded sliding-window rate limit (60/min)</td><td>Toast: <em>"Rate limit exceeded (429)"</em></td><td>Wait 30 seconds for the token bucket to replenish.</td></tr><tr><td><strong>Backend Offline (Degraded Pill)</strong></td><td>FastAPI server on port 8002 is stopped</td><td>Header pill turns Amber: <code>● Degraded</code></td><td>Restart backend using <code>python -m uvicorn main:app --host 127.0.0.1 --port 8002 --reload</code>.</td></tr><tr><td><strong>Gemini AI Offline / No Key</strong></td><td><code>GEMINI_API_KEY</code> missing from <code>.env</code></td><td>Scrutiny finishes without error</td><td>System automatically runs local Shannon Entropy gradient fallback.</td></tr><tr><td><strong>Corrupted Image Upload</strong></td><td>File is missing valid binary magic bytes</td><td>Error: <em>"Invalid image payload format"</em></td><td>Ensure the uploaded file is a genuine JPEG, PNG, or WebP image.</td></tr><tr><td><strong>Verification Tamper Mismatch</strong></td><td>A row in <code>civicaudit.db</code> was manually altered</td><td>Red warning: <em>"Integrity Check Failed (ALTERED)"</em></td><td>Database record was modified after sealing. Re-run an authentic audit.</td></tr></tbody></table>
+
+---
+
+<h1>12. Beginner FAQ: 25 Common Questions Answered</h1>
+
+1. <strong>What is PramanSetu?</strong>  
+   An automated GovTech evidence-intelligence platform that inspects public works photos before state funds are paid out.
+2. <strong>What does the name mean?</strong>  
+   <em>Praman</em> (प्रमाण) means "Proof/Evidence" and <em>Setu</em> (सेतु) means "Bridge". It is the Bridge of Verifiable Evidence.
+3. <strong>Why are there ten forensic vectors?</strong>  
+   Because fraud takes many forms—reusing old photos, claiming the wrong location, faking labor rolls, or using stock photos. Ten vectors cover the full spectrum of physical and digital deception.
+4. <strong>What is pHash?</strong>  
+   A perceptual hash that turns an image into a 64-bit visual fingerprint. Unlike cryptographic hashes, two photos of the same road look nearly identical in pHash even if resized or compressed.
+5. <strong>What is Hamming Distance?</strong>  
+   The number of bits that differ between two pHash fingerprints. A distance of <code>0</code> means the photos are completely identical.
+6. <strong>What is EXIF metadata?</strong>  
+   Hidden technical data saved inside photos by digital cameras and smartphones, including GPS coordinates, capture date, shutter speed, and camera model.
+7. <strong>What is the Verhoeff D5 algorithm?</strong>  
+   The official mathematical checksum algorithm used by UIDAI to validate that a 12-digit Aadhaar number is mathematically valid.
+8. <strong>Why does the scoring capacity add up to 250?</strong>  
+   To allow severe simultaneous infractions to accumulate full weight before clamping to the 0–100 scale.
+9. <strong>What does FLAGGED mean?</strong>  
+   A risk score of 60 or higher, indicating severe forensic anomalies. It triggers an automatic administrative payment-hold draft under GFR 175.
+10. <strong>Does a CLEAR verdict guarantee 100% zero fraud?</strong>  
+    No automated tool can replace physical site inspections entirely. <code>CLEAR</code> means no digital, spatial, labor, or chronological anomalies were detected in the submitted evidence.
+11. <strong>Where is audit data stored?</strong>  
+    In an ACID-compliant SQLite 3 database located at <code>backend/data/civicaudit.db</code>.
+12. <strong>What happens when I reboot my computer or restart the server?</strong>  
+    Nothing is lost. All audits, citizen reports, and contractor scorecards are permanently committed to disk in SQLite.
+13. <strong>What is the difference between REAL and DEMO audits?</strong>  
+    <code>DEMO</code> audits run with <code>is_demo=True</code> to let reviewers test the system without deducting rating points from real contractors.
+14. <strong>What is a SHA-256 seal?</strong>  
+    A 256-bit cryptographic digest calculated over the canonical JSON representation of an audit dossier to detect data tampering.
+15. <strong>Is SHA-256 a digital signature?</strong>  
+    No. SHA-256 is an integrity hash. Digital signatures require public-key cryptography (like RSA or ECDSA).
+16. <strong>Does the software signature use a physical USB smartcard?</strong>  
+    In this release, it uses a software keyed HMAC stamp. Hardware PKCS#11 smartcards require physical air-gapped workstations and drivers.
+17. <strong>Does PramanSetu directly initiate bank transfers or freezes in PFMS?</strong>  
+    No. It generates administrative payment-hold directive drafts under GFR 2017 Rule 175 for Drawing & Disbursing Officers.
+18. <strong>What is CSV formula injection?</strong>  
+19. <strong>What happens if the Gemini AI API is unreachable?</strong>  
+    The backend automatically falls back to local Shannon Entropy visual gradient analysis without throwing an error.
+20. <strong>Can citizens use PramanSetu?</strong>  
+    Yes! The Citizen Portal (<code>/citizen</code>) lets citizens submit photos and automatically drafts a Section 6(1) Form A RTI petition.
+21. <strong>What is the 30-day RTI countdown?</strong>  
+    Under Section 7(1) of the RTI Act 2005, the Public Information Officer (PIO) has exactly 30 calendar days to respond to citizen information requests.
+22. <strong>What is the March-Rush anomaly?</strong>  
+    A well-documented phenomenon where government departments rush to exhaust annual budgets before March 31, leading to a 3.8x spike in fraudulent claims.
+23. <strong>How does rate limiting protect the application?</strong>  
+    It prevents automated bots from flooding the server with thousands of heavy image processing requests.
+24. <strong>How do I switch languages?</strong>  
+    Click the language selector in the top header to instantly switch between English, Hindi (हिंदी), and Tamil (தமிழ்).
+25. <strong>What is the official classification of this release?</strong>  
+    <strong>B — Production-Capable Single-Node Deployment</strong>.
+
+---
+
+<h1>13. If You Only Remember 10 Things</h1>
+
+1. <strong>PramanSetu is a Pre-Disbursement Checkpoint:</strong> It stops fraudulent infrastructure claims <em>before</em> funds leave the state treasury.
+2. <strong>Ten Independent Vectors:</strong> It analyzes evidence across 10 mathematical, spatial, and chronological engines.
+3. <strong>Additive Scoring System:</strong> Vectors add points from a 250-point capacity, clamped between 0 and 100.
+4. <strong>Clear Decision Rules:</strong> $0-24 = \text{CLEAR}$, $25-59 = \text{REVIEW}$, $60-100 = \text{FLAGGED}$.
+5. <strong>Auto-Drafted Legal Notices:</strong> Flags trigger administrative payment-hold directives citing GFR 2017 Rule 175.
+6. <strong>ACID SQLite Persistence:</strong> Audits are permanently saved in <code>backend/data/civicaudit.db</code> and survive server restarts.
+7. <strong>Deterministic SHA-256 Sealing:</strong> Recomputes hash seals on <code>/verify</code> to detect any database tampering.
+8. <strong>Demo Isolation:</strong> Testing benchmark scenarios on <code>/demo</code> never corrupts live contractor ratings.
+9. <strong>Grassroots Citizen RTI:</strong> Auto-generates statutory Section 6(1) RTI petitions with a 30-day PIO deadline.
+10. <strong>Technically Honest:</strong> Clearly separates real algorithms from software PKI prototypes and reference datasets.
+
+</div>
+
+</body>
+</html>

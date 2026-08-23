@@ -1,0 +1,34 @@
+{
+  "indexed_web_assets": [
+    {
+      "web_asset_id": "WEB-STOCK-001",
+      "title": "Road Construction Machine Laying Asphalt on New Highway",
+      "source_type": "Stock Photography Library",
+      "domain": "shutterstock.com",
+      "source_url": "https://www.shutterstock.com/image-photo/road-construction-machine-laying-asphalt-new-184920194",
+      "phash_value": "fe81807e3e3e803e",
+      "original_upload_date": "2018-06-12",
+      "license": "Commercial Royalty-Free"
+    },
+    {
+      "web_asset_id": "WEB-WIKI-002",
+      "title": "Rural Bituminous Paving in Northern India",
+      "source_type": "Public Domain / Wikipedia Commons",
+      "domain": "commons.wikimedia.org",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Rural_Road_Construction_India_2019.jpg",
+      "phash_value": "3c9a81f4b209d8e7",
+      "original_upload_date": "2019-03-24",
+      "license": "Creative Commons Attribution-ShareAlike 4.0"
+    },
+    {
+      "web_asset_id": "WEB-NEWS-003",
+      "title": "State Highway Project Completion Inauguration Ceremony",
+      "source_type": "Public News Portal / Press Gallery",
+      "domain": "thehindu.com",
+      "source_url": "https://www.thehindu.com/news/national/other-states/highway-inauguration-2021/article33910.ece",
+      "phash_value": "fa0182bc94235e11",
+      "original_upload_date": "2021-07-19",
+      "license": "Editorial Press Copyright"
+    }
+  ]
+}

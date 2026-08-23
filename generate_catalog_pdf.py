@@ -1,0 +1,445 @@
+import os
+import subprocess
+import re
+
+BASE_DIR = r"C:\Users\LENOVO\OneDrive\Desktop\CivicAudit AI\CivicAudit AI"
+MD_PATH = os.path.join(BASE_DIR, "PramanSetu_Exhaustive_Matrix_Test_Catalog.md")
+HTML_PATH = os.path.join(BASE_DIR, "PramanSetu_Exhaustive_Matrix_Test_Catalog.html")
+PDF_PATH = os.path.join(BASE_DIR, "PramanSetu_Exhaustive_Matrix_Test_Catalog.pdf")
+
+with open(MD_PATH, "r", encoding="utf-8") as f:
+    md_content = f.read()
+
+# Build Rich, Professional HTML with Print CSS
+html_template = """<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>PramanSetu — Exhaustive Forensic Matrix Test Case Catalog & Validation Notebook</title>
+<style>
+    @page {
+        size: A4 portrait;
+        margin: 16mm 14mm 16mm 14mm;
+        @top-center {
+            content: "PramanSetu (प्रमाण सेतु) — Forensic Matrix Test Case Catalog & QA Notebook";
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            font-size: 7.5pt;
+            color: #64748b;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 3px;
+            margin-bottom: 6mm;
+        }
+        @bottom-left {
+            content: "Version 2.1.0 (Production-Hardened Single-Node Edition) | GFR Rule 175 Compliance";
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            font-size: 7.5pt;
+            color: #94a3b8;
+        }
+        @bottom-right {
+            content: "Page " counter(page);
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            font-size: 7.5pt;
+            font-weight: 600;
+            color: #475569;
+        }
+    }
+
+    @page:first {
+        @top-center { content: normal; }
+        @bottom-left { content: normal; }
+        @bottom-right { content: normal; }
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        font-size: 8.5pt;
+        line-height: 1.5;
+        color: #1e293b;
+        background-color: #ffffff;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Cover Page */
+    .cover-page {
+        page-break-after: always;
+        height: 100%;
+        min-height: 245mm;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 25mm 15mm 20mm 15mm;
+        border: 2px solid #0284c7;
+        border-radius: 12px;
+        background: linear-gradient(180deg, #f8fafc 0%, #f0f9ff 100%);
+        margin-bottom: 10mm;
+    }
+
+    .cover-badge {
+        display: inline-block;
+        background-color: #0284c7;
+        color: #ffffff;
+        font-weight: 700;
+        font-size: 8.5pt;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        padding: 5px 16px;
+        border-radius: 20px;
+        margin-bottom: 15px;
+    }
+
+    .cover-title {
+        font-size: 23pt;
+        font-weight: 800;
+        color: #0f172a;
+        margin: 0 0 8px 0;
+        letter-spacing: -0.5px;
+        line-height: 1.2;
+    }
+
+    .cover-subtitle {
+        font-size: 13pt;
+        font-weight: 600;
+        color: #0369a1;
+        margin: 0 0 14px 0;
+    }
+
+    .cover-desc {
+        font-size: 10pt;
+        color: #475569;
+        max-width: 150mm;
+        margin: 0 auto 25px auto;
+        line-height: 1.45;
+    }
+
+    .cover-meta-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        width: 100%;
+        max-width: 150mm;
+        text-align: left;
+        margin-bottom: 25px;
+    }
+
+    .meta-box {
+        background: #ffffff;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+        padding: 8px 12px;
+    }
+
+    .meta-label {
+        font-size: 7pt;
+        text-transform: uppercase;
+        font-weight: 700;
+        color: #64748b;
+        margin-bottom: 2px;
+    }
+
+    .meta-value {
+        font-size: 9pt;
+        font-weight: 600;
+        color: #0f172a;
+    }
+
+    .cover-footer {
+        margin-top: auto;
+        font-size: 8pt;
+        color: #64748b;
+        border-top: 1px solid #e2e8f0;
+        padding-top: 12px;
+        width: 100%;
+        max-width: 150mm;
+    }
+
+    /* Headings */
+    h1 {
+        font-size: 16pt;
+        font-weight: 800;
+        color: #0f172a;
+        border-bottom: 2px solid #0284c7;
+        padding-bottom: 4px;
+        margin-top: 18px;
+        margin-bottom: 10px;
+        page-break-after: avoid;
+    }
+
+    h2 {
+        font-size: 12pt;
+        font-weight: 700;
+        color: #1e3a8a;
+        margin-top: 14px;
+        margin-bottom: 6px;
+        border-bottom: 1px solid #e2e8f0;
+        padding-bottom: 3px;
+        page-break-after: avoid;
+    }
+
+    h3 {
+        font-size: 10pt;
+        font-weight: 600;
+        color: #0369a1;
+        margin-top: 10px;
+        margin-bottom: 4px;
+        page-break-after: avoid;
+    }
+
+    h4 {
+        font-size: 8.5pt;
+        font-weight: 600;
+        color: #334155;
+        margin-top: 8px;
+        margin-bottom: 2px;
+        page-break-after: avoid;
+    }
+
+    p, li {
+        color: #334155;
+        margin-top: 0;
+        margin-bottom: 5px;
+    }
+
+    ul, ol {
+        margin-top: 2px;
+        margin-bottom: 6px;
+        padding-left: 18px;
+    }
+
+    /* Tables */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 8px 0 12px 0;
+        font-size: 7.5pt;
+        page-break-inside: auto;
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto;
+    }
+
+    thead {
+        display: table-header-group;
+    }
+
+    th {
+        background: #0f172a;
+        color: #ffffff;
+        font-weight: 600;
+        text-align: left;
+        padding: 5px 6px;
+        border: 1px solid #334155;
+    }
+
+    td {
+        padding: 4px 6px;
+        border: 1px solid #cbd5e1;
+        vertical-align: top;
+    }
+
+    tr:nth-child(even) td {
+        background: #f8fafc;
+    }
+
+    /* Code & Pre */
+    code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 7.5pt;
+        background: #f1f5f9;
+        padding: 1px 3px;
+        border-radius: 3px;
+        color: #0f172a;
+        border: 1px solid #e2e8f0;
+    }
+
+    pre {
+        background: #0f172a;
+        color: #f8fafc;
+        padding: 8px 10px;
+        border-radius: 6px;
+        font-size: 7.5pt;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        overflow-x: auto;
+        margin: 8px 0;
+        page-break-inside: avoid;
+    }
+
+    pre code {
+        background: transparent;
+        border: none;
+        color: #38bdf8;
+        padding: 0;
+    }
+
+    hr {
+        border: 0;
+        height: 1px;
+        background: #cbd5e1;
+        margin: 12px 0;
+    }
+</style>
+</head>
+<body>
+
+<!-- Cover Page -->
+<div class="cover-page">
+    <div class="cover-badge">Authoritative Forensic QA Record</div>
+    <div class="cover-title">PramanSetu (CivicAudit AI)</div>
+    <div class="cover-subtitle">Exhaustive Forensic Matrix Test Case Catalog & Validation Notebook</div>
+    <div class="cover-desc">
+        Permanent technical laboratory notebook documenting accuracy, exact threshold boundaries, property invariants, adversarial resistance, and combinatorial scoring validation across the 10 multi-modal forensic engines.
+    </div>
+
+    <div class="cover-meta-grid">
+        <div class="meta-box">
+            <div class="meta-label">System Version</div>
+            <div class="meta-value">2.1.0 (Production-Hardened Single-Node)</div>
+        </div>
+        <div class="meta-box">
+            <div class="meta-label">Audit Date & Status</div>
+            <div class="meta-value">August 2026 | Verified with Limitations</div>
+        </div>
+        <div class="meta-box">
+            <div class="meta-label">Analytical Matrices</div>
+            <div class="meta-value">10 Core Forensic Vectors (250 Pt Pool)</div>
+        </div>
+        <div class="meta-box">
+            <div class="meta-label">Combinatorial Verification</div>
+            <div class="meta-value">1,024 / 1,024 Binary States Passing</div>
+        </div>
+        <div class="meta-box">
+            <div class="meta-label">Total Test Cases</div>
+            <div class="meta-value">200 Specific + 1,024 Combinatorial (100% Pass)</div>
+        </div>
+        <div class="meta-box">
+            <div class="meta-label">Statutory Alignment</div>
+            <div class="meta-value">GFR 2017 Rule 175 & CPWD SoR Ceilings</div>
+        </div>
+    </div>
+
+    <div class="cover-footer">
+        <strong>PramanSetu National Evidence Intelligence Gateway</strong><br>
+        Published & Verified: August 2026 | Official Engineering & Evaluation Quality Appendix
+    </div>
+</div>
+
+<!-- Main Body -->
+<div class="main-content">
+__BODY_CONTENT__
+</div>
+
+</body>
+</html>
+"""
+
+def md_to_html(md):
+    content = md
+    
+    # Strip metadata header block from MD since cover page handles it
+    content = re.sub(r"^# PramanSetu.*?(?=## 1\. Executive Summary|\Z)", "", content, flags=re.DOTALL)
+
+    # Convert Tables
+    lines = content.split("\n")
+    in_table = False
+    table_lines = []
+    new_lines = []
+    
+    for line in lines:
+        if "|" in line and "-+-" not in line:
+            in_table = True
+            table_lines.append(line)
+        else:
+            if in_table:
+                if len(table_lines) >= 2:
+                    t_html = ["<table>"]
+                    headers = [c.strip() for c in table_lines[0].split("|")[1:-1]]
+                    t_html.append("<thead><tr>" + "".join(f"<th>{h}</th>" for h in headers) + "</tr></thead>")
+                    t_html.append("<tbody>")
+                    for row_line in table_lines[2:]:
+                        if "|" in row_line:
+                            cols = [c.strip() for c in row_line.split("|")[1:-1]]
+                            t_html.append("<tr>" + "".join(f"<td>{c}</td>" for c in cols) + "</tr>")
+                    t_html.append("</tbody></table>")
+                    new_lines.append("".join(t_html))
+                in_table = False
+                table_lines = []
+            new_lines.append(line)
+
+    if in_table and len(table_lines) >= 2:
+        t_html = ["<table>"]
+        headers = [c.strip() for c in table_lines[0].split("|")[1:-1]]
+        t_html.append("<thead><tr>" + "".join(f"<th>{h}</th>" for h in headers) + "</tr></thead>")
+        t_html.append("<tbody>")
+        for row_line in table_lines[2:]:
+            if "|" in row_line:
+                cols = [c.strip() for c in row_line.split("|")[1:-1]]
+                t_html.append("<tr>" + "".join(f"<td>{c}</td>" for c in cols) + "</tr>")
+        t_html.append("</tbody></table>")
+        new_lines.append("".join(t_html))
+
+    content = "\n".join(new_lines)
+
+    # Convert Headings
+    content = re.sub(r"^# (.*?)$", r"<h1>\1</h1>", content, flags=re.MULTILINE)
+    content = re.sub(r"^## (.*?)$", r"<h2>\1</h2>", content, flags=re.MULTILINE)
+    content = re.sub(r"^### (.*?)$", r"<h3>\1</h3>", content, flags=re.MULTILINE)
+    content = re.sub(r"^#### (.*?)$", r"<h4>\1</h4>", content, flags=re.MULTILINE)
+
+    # Convert Bold, Italic, Code
+    content = re.sub(r"\*\*(.*?)\*\*", r"<strong>\1</strong>", content)
+    content = re.sub(r"\*(.*?)\*", r"<em>\1</em>", content)
+    content = re.sub(r"`(.*?)`", r"<code>\1</code>", content)
+
+    # Convert code blocks
+    content = re.sub(r"```(.*?)\n(.*?)```", r"<pre><code>\2</code></pre>", content, flags=re.DOTALL)
+
+    return content
+
+formatted_html = html_template.replace("__BODY_CONTENT__", md_to_html(md_content))
+
+with open(HTML_PATH, "w", encoding="utf-8") as f:
+    f.write(formatted_html)
+
+print("[INFO] Generated print-ready HTML:", HTML_PATH)
+
+# Path to Microsoft Edge
+edge_paths = [
+    r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe",
+    r"C:\Program Files\Microsoft\Edge\Application\msedge.exe"
+]
+
+edge_bin = None
+for p in edge_paths:
+    if os.path.exists(p):
+        edge_bin = p
+        break
+
+if not edge_bin:
+    print("[ERROR] Microsoft Edge executable not found.")
+    sys.exit(1)
+
+cmd = [
+    edge_bin,
+    "--headless",
+    "--disable-gpu",
+    "--no-pdf-header-footer",
+    f"--print-to-pdf={PDF_PATH}",
+    HTML_PATH
+]
+
+print("[INFO] Rendering PDF via headless Edge...")
+res = subprocess.run(cmd, capture_output=True, text=True)
+if res.returncode == 0 and os.path.exists(PDF_PATH):
+    size_kb = os.path.getsize(PDF_PATH) / 1024.0
+    print(f"[SUCCESS] Generated PDF ({size_kb:.1f} KB) at: {PDF_PATH}")
+else:
+    print(f"[ERROR] Headless PDF generation failed. Code: {res.returncode}")
+    print("Stderr:", res.stderr)

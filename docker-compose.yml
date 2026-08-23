@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  # 1. FastAPI Multi-Vector Forensic Gateway
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: civicaudit-backend
+    restart: unless-stopped
+    ports:
+      - "8002:8002"
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      - HOST=0.0.0.0
+      - PORT=8002
+    volumes:
+      - civicaudit_db_data:/app/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8002/api/health"]
+      interval: 20s
+      timeout: 5s
+      retries: 3
+
+  # 2. Next.js GovTech Frontend Portal
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: civicaudit-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://backend:8002
+      - NODE_ENV=production
+    depends_on:
+      backend:
+        condition: service_healthy
+
+volumes:
+  civicaudit_db_data:
+    name: civicaudit_db_data
